@@ -2,6 +2,7 @@ import argparse
 import glob
 import os
 import shutil
+import subprocess
 from jinja2 import Environment, FileSystemLoader
 
 parser = argparse.ArgumentParser(description='Build the jinja templates into a static html site.')
@@ -14,10 +15,11 @@ template_dir = 'templates'
 content_dir = 'content'
 static_dir = f'{content_dir}/static'
 output_dir = 'output'
+css_dir = 'css'
 
 if args.release:
     # TO-DO: change to https when available.
-    site_url = "http://manjotbal.ca"
+    site_url = 'http://manjotbal.ca'
 else:
     site_url = f'{os.getcwd()}/{output_dir}'
 
@@ -36,5 +38,11 @@ for filename in glob.iglob(f'{content_dir}/**/*.html', recursive=True):
 
     with open(f'{output_dir}/{filename}', 'w') as outfile:
         outfile.write(template.render(site_url=site_url))
+
+# Make sure the less npm module is installed globally.
+for less in glob.iglob(f'{content_dir}/{css_dir}/*.less'):
+    css = less.split('/')[-1]
+    css = f'{css.split(".")[0]}.css'
+    subprocess.run(['lessc', less, f'{output_dir}/{css_dir}/{css}'])
 
 shutil.copytree(static_dir, output_dir, dirs_exist_ok=True)
