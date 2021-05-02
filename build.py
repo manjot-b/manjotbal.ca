@@ -22,6 +22,8 @@ else:
     site_url = f'{os.getcwd()}/{output_dir}'
 
 env = Environment(loader=FileSystemLoader([template_dir, content_dir]))
+env.trim_blocks = True
+env.lstrip_blocks = True
 
 os.makedirs(output_dir, exist_ok=True)
 
