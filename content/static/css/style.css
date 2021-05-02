@@ -1,17 +1,17 @@
-* {
-	color: #333;
-}
 body {
   	margin: 0;
-	background-color: #f7f6e7;
+	background-color: #fff7eb;
+}
+
+h1 {
+	color: #1e325c;
 }
 
 nav {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: #314e52;
-	border: 1px solid #333;
+	background-color: #ffbe5c;
 }
 
 nav > a:first-child {
@@ -34,24 +34,23 @@ nav > ul {
 
 nav li > a {
   	display: block;
-	padding: .65em 2em;
+	padding: 1.08em 2em;
 	border-left: 1px solid #333;
 }
 
 @keyframes nav-hover {
 	from
 	{
-		background-color: #314e52;
-		color: #e7e6e1;
+		background-color: #ffbe5c;
+		color: #1e325c;
 	}
 	to
 	{
-		background-color: #f2a154;
-		color: #333;
+		background-color: #2d4b8b;
+		color: #ccc;
 	}
 }
 nav li a:hover {
-	padding: 1.08em 2em;
 	animation-name: nav-hover;
 	animation-duration: .5s;
 	animation-fill-mode: forwards;
@@ -59,11 +58,11 @@ nav li a:hover {
 
 nav a {
 	text-decoration: none;
-	color: #e7e6e1;
+	color: #1e325c;
 }
 
 nav a:visited {
-	color: #e7e6e1;
+	color: #1e325c;
 }
 
 .content {
