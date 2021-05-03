@@ -80,6 +80,7 @@ nav a:visited {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	align-items: flex-start;
 	padding-top: 30px;
 }
 
@@ -101,4 +102,35 @@ nav a:visited {
 
 .profile-desc {
 	flex: 1 1 600px;
+}
+
+.social {
+	list-style: none;
+}
+
+.social > li {
+	margin-bottom: 1em;
+	display: flex;
+	align-items: center;
+}
+
+.social > li::before {
+  	display: inline-block;
+	width: 64px;
+	height: 64px;
+	content: "";
+	background-size: 100%;
+	margin: 0 10px 0 0;
+}
+
+#email::before {
+	background-image: url({{ site_url }}/images/letter.png);
+}
+
+#github::before {
+	background-image: url({{ site_url }}/images/github-sign.png);
+}
+
+#linkedin::before {
+	background-image: url({{ site_url }}/images/linkedin.png);
 }

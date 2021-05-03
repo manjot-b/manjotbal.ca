@@ -2,7 +2,7 @@ import argparse
 import glob
 import os
 import shutil
-import subprocess
+from subprocess import Popen, PIPE
 from jinja2 import Environment, FileSystemLoader
 
 parser = argparse.ArgumentParser(description='Build the jinja templates into a static html site.')
@@ -29,20 +29,23 @@ env.lstrip_blocks = True
 
 os.makedirs(output_dir, exist_ok=True)
 
-for filename in glob.iglob(f'{content_dir}/**/*.html', recursive=True):
+for html_file in glob.iglob(f'{content_dir}/**/*.html', recursive=True):
     # No need to have the content directory appended to filename
     # because we already set the jinja environment to search in the
     # content directory.
-    filename = filename[len(content_dir) + 1:]
-    template = env.get_template(filename)
+    html_file = html_file[len(content_dir) + 1:]
+    template = env.get_template(html_file)
 
-    with open(f'{output_dir}/{filename}', 'w') as outfile:
+    with open(f'{output_dir}/{html_file}', 'w') as outfile:
         outfile.write(template.render(site_url=site_url))
 
 # Make sure the less npm module is installed globally.
-for less in glob.iglob(f'{content_dir}/{css_dir}/*.less'):
-    css = less.split('/')[-1]
-    css = f'{css.split(".")[0]}.css'
-    subprocess.run(['lessc', less, f'{output_dir}/{css_dir}/{css}'])
+for less_file in glob.iglob(f'{content_dir}/{css_dir}/*.less'):
+    less_file = less_file[len(content_dir) + 1:]
+    template = env.get_template(less_file)
+    css = f'{less_file.split(".")[0]}.css'
+
+    proc = Popen(['lessc', '-', f'{output_dir}/{css}'], stdout=PIPE, stdin=PIPE, stderr=PIPE)
+    proc.communicate(input=template.render(site_url=site_url).encode())
 
 shutil.copytree(static_dir, output_dir, dirs_exist_ok=True)
