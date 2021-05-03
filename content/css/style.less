@@ -76,17 +76,27 @@ nav a:visited {
 }
 
 .content {
-	margin: 0 2em;
+	margin: 0 10em;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	padding-top: 30px;
+}
+
+@media screen and (max-width: 768px) {
+	.content {
+		margin: 0 4em;
+	}
 }
 
 .profile-img {
 	display: block;
 	width: 300px;
-	margin: 0.5em;
+	margin: 2em;
+	margin-top: 0;
 	flex: 0 1 auto;
+	border: 4px solid @color-secondary;
+	border-radius: 50%;
 }
 
 .profile-desc {
