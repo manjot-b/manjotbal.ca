@@ -94,7 +94,17 @@ nav a:visited {
 
 @media screen and (max-width: 768px) {
 	.content {
-		margin: 0 4em;
+		margin: 0 2em;
+	}
+
+	nav {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	nav li:first-child > a {
+		/*border-right: 1px solid @color-dark-grey;*/
+	  	border: none;
 	}
 }
 
