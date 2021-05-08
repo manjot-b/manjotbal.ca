@@ -3,10 +3,12 @@
 @color-primary-light: #fff7eb;
 @color-primary: #ffbe5c;
 @color-secondary: #1e325c;
+@reg-font-size: 1.125em;
 
 body {
   	margin: 0;
 	background-color: @color-primary-light;
+	font-family: Arial, Tahoma, sans-serif;
 }
 
 h1 {
@@ -15,6 +17,11 @@ h1 {
 
 p {
 	color: @color-dark-grey;
+	font-size: @reg-font-size;
+}
+
+a {
+	font-size: @reg-font-size;
 }
 
 nav {
@@ -22,6 +29,7 @@ nav {
 	justify-content: space-between;
 	align-items: center;
 	background-color: @color-primary;
+	font-weight: 600;
 }
 
 nav > a:first-child {
