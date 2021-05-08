@@ -31,9 +31,8 @@ nav {
 nav > a:first-child {
 	text-align: left;
 	font-size: 2em;
-	padding: 0.25em 0;
+	padding: 0.25em 0.25em;
 	padding-left: 1em;
-	padding-right: .25em;
 	white-space: nowrap;
 }
 
@@ -48,6 +47,9 @@ nav > ul {
 
 nav li > a {
   	display: block;
+	width: 150px;
+	box-sizing: border-box;
+	text-align: center;
 	padding: 1.08em 2em;
 	border-left: 1px solid @color-dark-grey;
 }
@@ -98,8 +100,11 @@ nav a:visited {
 		justify-content: center;
 	}
 
+	nav > a:first-child {
+		padding: 0.25em 3em;
+	}
+
 	nav li:first-child > a {
-		/*border-right: 1px solid @color-dark-grey;*/
 	  	border: none;
 	}
 }
