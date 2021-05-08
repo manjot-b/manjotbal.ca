@@ -2,6 +2,7 @@ import argparse
 import glob
 import os
 import shutil
+import socket
 from subprocess import Popen, PIPE
 from jinja2 import Environment, FileSystemLoader
 
@@ -21,7 +22,18 @@ if args.release:
     # TO-DO: change to https when available.
     site_url = 'http://manjotbal.ca'
 else:
-    site_url = f'{os.getcwd()}/{output_dir}'
+    # Hack to get the local ip address.
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.connect(('0.0.0.1', 1))
+        ip = sock.getsockname()[0]
+    except:
+        print('Error while trying to get local ip')
+    finally:
+        sock.close()
+
+    # Make sure nginx is up and running.
+    site_url = f'http://{ip}'
 
 env = Environment(loader=FileSystemLoader([template_dir, content_dir]))
 env.trim_blocks = True
@@ -49,3 +61,6 @@ for less_file in glob.iglob(f'{content_dir}/{css_dir}/*.less'):
     proc.communicate(input=template.render(site_url=site_url).encode())
 
 shutil.copytree(static_dir, output_dir, dirs_exist_ok=True)
+
+print(f'Files generated in {output_dir}/')
+print(f'Site viewable at {site_url}')
