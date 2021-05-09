@@ -15,12 +15,14 @@ args = parser.parse_args()
 template_dir = 'templates'
 content_dir = 'content'
 static_dir = f'{content_dir}/static'
-output_dir = 'output'
+dev_output_dir = 'output/dev'
+release_output_dir = 'output/release'
 css_dir = 'css'
 
 if args.release:
     # Must be https
     site_url = 'https://manjotbal.ca'
+    output_dir = release_output_dir
 else:
     # Hack to get the local ip address.
     try:
@@ -34,6 +36,7 @@ else:
 
     # Make sure nginx is up and running.
     site_url = f'http://{ip}'
+    output_dir = dev_output_dir
 
 env = Environment(loader=FileSystemLoader([template_dir, content_dir]))
 env.trim_blocks = True
