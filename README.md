@@ -1,6 +1,6 @@
 # About
 This is the project for my personal website [manjotbal.ca](https://manjotbal.ca). It uses
-the jinja2 templating engine to output static HTML and CSS files.
+the [jinja2](https://jinja.palletsprojects.com/en/2.11.x/) templating engine to output static HTML and CSS files.
 
 # Structure
 Jinja layout files can be found in the `templates/` directory.
