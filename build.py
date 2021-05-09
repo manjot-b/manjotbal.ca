@@ -3,12 +3,16 @@ import glob
 import os
 import shutil
 import socket
+import subprocess
 from subprocess import Popen, PIPE
 from jinja2 import Environment, FileSystemLoader
 
 parser = argparse.ArgumentParser(description='Build the jinja templates into a static html site.')
 parser.add_argument('--release',\
         help='Uses the appropriate variables and paths for the release version.',\
+        action='store_true')
+parser.add_argument('--publish',\
+        help='Publish the website via rsync. Does nothing if --release is not also specified.',\
         action='store_true')
 args = parser.parse_args()
 
@@ -67,3 +71,8 @@ shutil.copytree(static_dir, output_dir, dirs_exist_ok=True)
 
 print(f'Files generated in {output_dir}/')
 print(f'Site viewable at {site_url}')
+
+
+# Use rsync to publish the contents of the release folder to the sever.
+if args.publish and args.release:
+    subprocess.run(['rsync', '-rzP', f'{release_output_dir}/', 'root@manjotbal.ca:/var/www/manjotbal.ca/html'])
