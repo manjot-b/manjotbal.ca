@@ -32,7 +32,6 @@ nav > a:first-child {
 	text-align: left;
 	font-size: 2em;
 	padding: 0.25em 0.25em;
-	padding-left: 1em;
 	white-space: nowrap;
 }
 
@@ -48,9 +47,9 @@ nav > ul {
 nav li > a {
   	display: block;
 	width: 150px;
+	padding: 1.08em 0;
 	box-sizing: border-box;
 	text-align: center;
-	padding: 1.08em 2em;
 	border-left: 1px solid @color-dark-grey;
 }
 
@@ -103,8 +102,16 @@ nav a:visited {
 		justify-content: center;
 	}
 
-	nav > a:first-child {
-		padding: 0.25em 3em;
+	nav > ul {
+		width: 100%;
+	}
+
+	nav li {
+		width: 33.33%;
+	}
+
+	nav li > a {
+		width: 100%;
 	}
 
 	nav li:first-child > a {
@@ -112,6 +119,11 @@ nav a:visited {
 	}
 }
 
+@media screen and (max-width: 576px) {
+	nav > a:first-child {
+		padding: 0.25em 0;
+	}
+}
 .profile-img {
 	display: block;
 	width: 300px;
