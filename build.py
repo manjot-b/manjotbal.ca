@@ -19,8 +19,8 @@ output_dir = 'output'
 css_dir = 'css'
 
 if args.release:
-    # TO-DO: change to https when available.
-    site_url = 'http://manjotbal.ca'
+    # Must be https
+    site_url = 'https://manjotbal.ca'
 else:
     # Hack to get the local ip address.
     try:
