@@ -8,11 +8,15 @@ HTML files that extend these layout files are in the `content/` directory.
 All Less files are in `content/css` and when generated will be placed in `output/<mode>/css/`.
 
 # Usage
-To generate the dev files to be run on a local nginx webserver enter
+To generate the dev files to be run on a local (vm) nginx webserver enter
 ```
 python3 build.py
 ```
-The nginx server should point to `output/dev/` as the root directory. Or copy the contents of this directory to a location of your choosing.
+The nginx server should point to `output/dev/` as the root directory. Or publish the contents of 
+this directory to server of your choosing.
+```
+python3 build.py --publish --host <host-address>
+```
 
 To generate the release files add the `--release` switch,
 ```

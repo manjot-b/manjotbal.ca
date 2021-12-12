@@ -12,8 +12,11 @@ parser.add_argument('--release',\
         help='Uses the appropriate variables and paths for the release version.',\
         action='store_true')
 parser.add_argument('--publish',\
-        help='Publish the website via rsync. Does nothing if --release is not also specified.',\
+        help='Publish the website via rsync. Publishes to the release server if --release is \
+        specified, otherwise the --user and --host need to also be specified.',\
         action='store_true')
+parser.add_argument('--host', help='The hostname when building or publishing to dev server. \
+        e.g user@host. This must be provided if only building the dev version.')
 args = parser.parse_args()
 
 template_dir = 'templates'
@@ -27,20 +30,13 @@ if args.release:
     # Must be https
     site_url = 'https://manjotbal.ca'
     output_dir = release_output_dir
-else:
-    # Hack to get the local ip address.
-    try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.connect(('0.0.0.1', 1))
-        ip = sock.getsockname()[0]
-    except:
-        print('Error while trying to get local ip')
-    finally:
-        sock.close()
-
+elif args.host:
     # Make sure nginx is up and running.
-    site_url = f'http://{ip}'
+    site_url = f'http://{args.host}'
     output_dir = dev_output_dir
+else:
+    print('Error: One of --release or --host must be specified.')
+    exit(1)
 
 env = Environment(loader=FileSystemLoader([template_dir, content_dir]))
 env.trim_blocks = True
@@ -70,9 +66,18 @@ for less_file in glob.iglob(f'{content_dir}/{css_dir}/*.less'):
 shutil.copytree(static_dir, output_dir, dirs_exist_ok=True)
 
 print(f'Files generated in {output_dir}/')
-print(f'Site viewable at {site_url}')
 
 
 # Use rsync to publish the contents of the release folder to the sever.
 if args.publish and args.release:
-    subprocess.run(['rsync', '-rzP', f'{release_output_dir}/', 'root@manjotbal.ca:/var/www/manjotbal.ca/html'])
+    subprocess.run(['rsync', '-azP', f'{output_dir}/', \
+            'root@manjotbal.ca:/var/www/manjotbal.ca/html'])
+    print(f'Site viewable at {site_url}')
+elif args.publish and args.host:
+    subprocess.run(['rsync', '-azP', f'{output_dir}/', \
+            f'root@{args.host}:/var/www/manjotbal.ca'])
+    print(f'Site viewable at {site_url}')
+else:
+    print('Error: To publish specify either --release or --host.')
+    exit(1)
+
