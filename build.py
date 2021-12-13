@@ -51,6 +51,12 @@ for html_file in glob.iglob(f'{content_dir}/**/*.html', recursive=True):
     html_file = html_file[len(content_dir) + 1:]
     template = env.get_template(html_file)
 
+    # The path to the html needs to exist before we can open the file.
+    paths = html_file.split('/')
+    if len(paths) > 1:
+        path_to_html = '/'.join(paths[0:-1])
+        os.makedirs(f'{output_dir}/{path_to_html}', exist_ok=True)
+
     with open(f'{output_dir}/{html_file}', 'w') as outfile:
         outfile.write(template.render(site_url=site_url))
 
