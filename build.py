@@ -90,7 +90,7 @@ print(f'Files generated in {output_dir}/')
 # Use rsync to publish the contents of the release folder to the sever.
 if args.publish and args.release:
     subprocess.run(['rsync', '-azP', f'{output_dir}/', \
-            'root@manjotbal.ca:/var/www/manjotbal.ca/html'])
+            'root@manjotbal.ca:/var/www/manjotbal.ca'])
     print(f'Site viewable at {site_url}')
 elif args.publish and args.host:
     subprocess.run(['rsync', '-azP', f'{output_dir}/', \
