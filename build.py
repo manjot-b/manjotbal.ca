@@ -64,10 +64,17 @@ for html_file in glob.iglob(f'{content_dir}/**/*.html', recursive=True):
 for less_file in glob.iglob(f'{content_dir}/{css_dir}/*.less'):
     less_file = less_file[len(content_dir) + 1:]
     template = env.get_template(less_file)
-    css = f'{less_file.split(".")[0]}.css'
+    filename = less_file.split(".")[0]
+    css = f'{filename}.css'
+    css_min = f'{filename}-min.css'
 
     proc = Popen(['lessc', '-', f'{output_dir}/{css}'], stdout=PIPE, stdin=PIPE, stderr=PIPE)
     proc.communicate(input=template.render(site_url=site_url).encode())
+
+    with open(f'{output_dir}/{css}', 'r') as css_file:
+        minified = rcssmin.cssmin(css_file.read())
+        with open(f'{output_dir}/{css_min}', 'w') as css_min_file:
+            css_min_file.write(minified)
 
 shutil.copytree(static_dir, output_dir, dirs_exist_ok=True)
 
