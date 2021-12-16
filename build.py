@@ -27,7 +27,7 @@ args = parser.parse_args()
 
 template_dir = 'templates'
 content_dir = 'content'
-static_dir = f'{content_dir}/static'
+assets_dir = f'{content_dir}/assets'
 dev_output_dir = 'output/dev'
 release_output_dir = 'output/release'
 css_dir = 'css'
@@ -82,7 +82,7 @@ for less_file in glob.iglob(f'{content_dir}/{css_dir}/*.less'):
         with open(f'{output_dir}/{css_min}', 'w') as css_min_file:
             css_min_file.write(minified)
 
-shutil.copytree(static_dir, output_dir, dirs_exist_ok=True)
+shutil.copytree(assets_dir, output_dir, dirs_exist_ok=True)
 
 print(f'Files generated in {output_dir}/')
 
