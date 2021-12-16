@@ -1,11 +1,17 @@
 import argparse
 import glob
 import os
+import rcssmin
 import shutil
 import socket
 import subprocess
 from subprocess import Popen, PIPE
 from jinja2 import Environment, FileSystemLoader
+
+# Update the build version whenever CSS or JS is updated.
+# This will ensure that the user will get the latest styling
+# rather than the locally cached version.
+BUILD_VERSION = '1.1'
 
 parser = argparse.ArgumentParser(description='Build the jinja templates into a static html site.')
 parser.add_argument('--release',\
@@ -58,7 +64,7 @@ for html_file in glob.iglob(f'{content_dir}/**/*.html', recursive=True):
         os.makedirs(f'{output_dir}/{path_to_html}', exist_ok=True)
 
     with open(f'{output_dir}/{html_file}', 'w') as outfile:
-        outfile.write(template.render(site_url=site_url))
+        outfile.write(template.render(site_url=site_url, build_version=BUILD_VERSION))
 
 # Make sure the less npm module is installed globally.
 for less_file in glob.iglob(f'{content_dir}/{css_dir}/*.less'):
