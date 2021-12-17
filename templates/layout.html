@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ site_url }}/css/style-min.css?v={{ build_version }}">
-  <title>{% block title %}{% endblock %}</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://unpkg.com/@csstools/normalize.css" rel="stylesheet" />
+	<link rel="stylesheet" href="{{ site_url }}/css/style-min.css?v={{ build_version }}">
+	<title>{% block title %}{% endblock %}</title>
 </head>
 
 <body>
-  <nav>
-	<a href="{{ site_url }}">Manjot Bal</a>
-	<ul>
-	  <li><a href="{{ site_url }}">Home</a></li>
-	  <li><a href="{{ site_url }}/#contact">Contact</a></li>
-	  <li><a href="{{ site_url }}/projects">Projects</a></li>
-	</ul>
-  </nav>
-  <div class="content">
-	{% block content %}
-	{% endblock %}
-  </div>
+	<nav>
+		<a href="{{ site_url }}">Manjot Bal</a>
+		<ul>
+			<li><a href="{{ site_url }}">Home</a></li>
+			<li><a href="{{ site_url }}/#contact">Contact</a></li>
+			<li><a href="{{ site_url }}/projects">Projects</a></li>
+		</ul>
+	</nav>
+	<div class="content">
+		{% block content %}
+		{% endblock %}
+	</div>
 </body>
 </html>
