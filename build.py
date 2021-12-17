@@ -19,10 +19,10 @@ parser.add_argument('--release',\
         action='store_true')
 parser.add_argument('--publish',\
         help='Publish the website via rsync. Publishes to the release server if --release is \
-        specified, otherwise the --user and --host need to also be specified.',\
+        specified, otherwise --host needs to also be specified.',\
         action='store_true')
 parser.add_argument('--host', help='The hostname when building or publishing to dev server. \
-        e.g user@host. This must be provided if only building the dev version.')
+        e.g root@host. This must be provided if building or publishing the dev version.')
 args = parser.parse_args()
 
 template_dir = 'templates'
@@ -32,13 +32,15 @@ dev_output_dir = 'output/dev'
 release_output_dir = 'output/release'
 css_dir = 'css'
 
-if args.release:
+if args.release and not args.host:
     # Must be https
     site_url = 'https://manjotbal.ca'
+    hostname = 'manjotbal.ca'
     output_dir = release_output_dir
-elif args.host:
+elif not args.release and args.host:
     # Make sure nginx is up and running.
     site_url = f'http://{args.host}'
+    hostname = args.host
     output_dir = dev_output_dir
 else:
     print('Error: One of --release or --host must be specified.')
@@ -88,15 +90,8 @@ print(f'Files generated in {output_dir}/')
 
 
 # Use rsync to publish the contents of the release folder to the sever.
-if args.publish and args.release:
-    subprocess.run(['rsync', '-azP', f'{output_dir}/', \
-            'root@manjotbal.ca:/var/www/manjotbal.ca'])
+if args.publish:
+    subprocess.run(['rsync', '-azP', '--usermap=*:www-data', '--groupmap=*:www-data', \
+        f'{output_dir}/', f'root@{hostname}:/var/www/manjotbal.ca'])
     print(f'Site viewable at {site_url}')
-elif args.publish and args.host:
-    subprocess.run(['rsync', '-azP', f'{output_dir}/', \
-            f'root@{args.host}:/var/www/manjotbal.ca'])
-    print(f'Site viewable at {site_url}')
-else:
-    print('Error: To publish specify either --release or --host.')
-    exit(1)
 

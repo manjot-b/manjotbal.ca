@@ -10,10 +10,9 @@ All Less files are in `content/css` and when generated will be placed in `output
 # Usage
 To generate the dev files to be run on a local (vm) nginx webserver enter
 ```
-python3 build.py
+python3 build.py --host <host-address>
 ```
-The nginx server should point to `output/dev/` as the root directory. Or publish the contents of 
-this directory to server of your choosing.
+To publish the contents of this directory to a server of your choosing.
 ```
 python3 build.py --publish --host <host-address>
 ```
