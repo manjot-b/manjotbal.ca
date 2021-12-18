@@ -35,6 +35,26 @@ a:hover {
 	text-decoration: underline;
 }
 
+dl {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+dt {
+	width: 12%;
+	font-weight: bold;
+	text-align: right;
+	margin-bottom: 0.25em;
+}
+
+dd {
+	width: 85%;
+	padding-left: 0.75em;
+	margin-left: 0;
+	margin-bottom: 0.75em;
+}
+
 nav {
 	display: flex;
 	justify-content: space-between;
@@ -132,6 +152,16 @@ nav a:visited {
 
 	nav li:first-child > a {
 	  	border: none;
+	}
+
+	dt {
+		width: 100%;
+		text-align: left;
+	}
+
+	dd {
+		width: 100%;
+		padding-left: 0em;
 	}
 }
 
@@ -239,4 +269,13 @@ nav a:visited {
 		width: 300px;
 	}
 }
+
+.project-article img {
+	display: block;
+	width: 100%;
+	max-width: 800px;
+	margin: auto;
+	border: 2px solid @color-secondary-0;
+}
+
 
