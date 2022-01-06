@@ -11,7 +11,7 @@ from jinja2 import Environment, FileSystemLoader
 # Update the build version whenever CSS or JS is updated.
 # This will ensure that the user will get the latest styling
 # rather than the locally cached version.
-BUILD_VERSION = '1.2.1'
+BUILD_VERSION = '1.2.2'
 
 parser = argparse.ArgumentParser(description='Build the jinja templates into a static html site.')
 parser.add_argument('--release',\

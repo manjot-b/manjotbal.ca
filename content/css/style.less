@@ -195,8 +195,8 @@ nav li a:hover {
 
 .social > li::before {
   	display: inline-block;
-	width: 64px;
-	height: 64px;
+	min-width: 64px;
+	min-height: 64px;
 	content: "";
 	background-size: 100%;
 	margin: 0 10px 0 0;
@@ -204,14 +204,17 @@ nav li a:hover {
 
 #email::before {
 	background-image: url({{ site_url }}/images/letter.png);
+	background-repeat: no-repeat;
 }
 
 #github::before {
 	background-image: url({{ site_url }}/images/github-sign.png);
+	background-repeat: no-repeat;
 }
 
 #linkedin::before {
 	background-image: url({{ site_url }}/images/linkedin.png);
+	background-repeat: no-repeat;
 }
 
 .projects {
