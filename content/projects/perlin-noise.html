@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block title %}Perlin Noise{% endblock %}
+
+
+{% block content %}
+	<article class="project-article">
+		<h1>Perlin Noise</h1>
+		<section>
+			<h2>About</h2>
+			<p>
+				<a href="https://github.com/manjot-b/cpsc591-noise" target="_blank">GitHub repo</a>
+			</p>
+			<p>
+				This was my final project for my Rendering course. I explored
+				using a <a href="https://en.wikipedia.org/wiki/Perlin_noise"
+					target="_blank">Perlin noise</a> function to create 3D
+				procedural textures, such as grass and wood and also to
+				animate water.
+			</p>
+
+			<video controls preload="metadata">
+				<source src="{{ site_url }}/videos/perlin-noise-720p.webm"
+						type="video/webm">
+			</video>
+
+			<h2>Resources</h2>
+			<p>
+				The accompanying presentation I gave is linked down below.
+			</p>
+			<ul>
+				<li>
+					<a href="{{ site_url }}/docs/perlin-noise-manjot-bal.pdf">
+						Procedural Textures with Perlin Noise &ndash; PDF
+					</a>
+				</li>
+			</ul>
+		</section>
+	</article>
+{% endblock %}
