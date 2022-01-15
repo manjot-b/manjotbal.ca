@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+
+{% block title %}HyperBright{% endblock %}
+
+
+{% block content %}
+	<article class="project-article">
+		<h1>HyperBright</h1>
+		<section>
+			<h2>About</h2>
+			<p><a href="https://github.com/manjot-b/hyperbright" target="_blank">GitHub repo</a></p>
+			<p>
+				This was a group project that we made for our Games Programming
+				course.  We created a driving game where the objective is to
+				paint the most tiles with your color. You can collect pickups
+				along the way to assist you or to cause setbacks your oppenents.
+			</p>
+
+			<video controls preload="metadata">
+				<source src="{{ site_url }}/videos/hyperbright-map4-720p.webm"
+						type="video/webm">
+			</video>
+
+			<h2>Contributions</h2>
+			<p>
+				Some of the main things that I contributed to the project were:
+			</p>
+			<h3>Creating a Rendering Pipeline</h3>
+			<p>
+				I created a simple to use rendering pipeline in OpenGL/C++ for
+				our game engine. I made an <code>IRenderable</code> interface
+				that a class could implement. All <code>IRenderable</code>
+				objects would then be placed in a queue for the
+				<code>Renderer</code> to render to the screen. I also created
+				the shaders for the lighting and shadows.
+			</p>
+
+			<h3>Build System</h3>
+			<p>
+				We used CMake as our build system. I chose this because most
+				of the external libraries that we needed were also using CMake,
+				so this would make it easier to integrate them into our
+				project. This also helped when I ported the game over to Linux
+				as CMake is meant for cross platform compilation.
+			</p>
+
+			<p>
+				I also handled adding third-party dependencies as git
+				submodules. This greatly reduced the size and complexity of our
+				repo while also making it easy to upgrade the dependencies if
+				required.
+			</p>
+
+			<h3>Modelling</h3>
+			<p>
+				All the models in the game I created using Blender, the popular
+				3D modelling software.
+			</p>
+
+			<h3>My Team</h3>
+			<p>
+				Of course I couldn't have made this project by myself. Some of the things
+				my teammates made were:
+				<ul>
+					<li>AI logic.</li>
+					<li>Audio and music.</li>
+					<li>Camera following.</li>
+					<li>Font rendering.</li>
+					<li>Map design.</li>
+					<li>Physics (PhysX) engine integration.</li>
+					<li>Vehicle handling tuning.</li>
+				</ul>
+			<p>
+		</section>
+	</article>
+{% endblock %}
