@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block title %}Quantum Stabilizers{% endblock %}
+
+
+{% block content %}
+	<article class="project-article">
+		<h1>Quantum Stabilizers</h1>
+		<section>
+			<h2>About</h2>
+			<p>
+				The following is a report and presentation I gave for my
+				Introduction to Quantum Computing course. In it I give a
+				brief overview of how error detection and correction
+				can be achieved when using quantum computers.
+			</p>
+
+			<h2>Resources</h2>
+			<ul>
+				<li>
+					<a href="{{ site_url }}/docs/quant-stabilizers-report.pdf">
+						Quantum Stabilizers Report &ndash; PDF
+					</a>
+				</li>
+				<li>
+					<a href="{{ site_url }}/docs/quant-stabilizers-pres.pdf">
+						Quantum Stabilizers Presentation &ndash; PDF
+					</a>
+				</li>
+			</ul>
+		</section>
+	</article>
+{% endblock %}
