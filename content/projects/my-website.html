@@ -1,0 +1,85 @@
+{% extends 'layout.html' %}
+
+{% block title %}manjotbal.ca{% endblock %}
+
+
+{% block content %}
+	<article class="project-article">
+		<h1>manjotbal.ca</h1>
+		<section>
+			<h2>About</h2>
+			<p>
+				<a href="https://github.com/manjot-b/manjotbal.ca" target="_blank">GitHub repo</a>
+			</p>
+			<p>
+				I decided to create my own personal website. Currently it is just
+				a portfolio where I can showcase some of the projects I have
+				made in detail. In the future I plan on writing some blogs, so
+				that will be an update I will need to make.
+			</p>
+
+			<h2>Tech</h2>
+			<h3>DNS and Hosting</h3>
+			<p>
+				Since this whole site is simply serving static HTML/CSS files,
+				I decided to host on a rented cloud VPS. The hosting provider I
+				chose to go with was
+				<a href="https://www.vultr.com/?ref=8859320">Vultr</a> because
+				their plans are priced pretty well and they also had servers
+				available close to Alberta (Seattle). I spun up a Debian server
+				running Nginx and simply copy over the files to the web directory
+				whenever I make an update.
+			</p>
+			<p>
+				My domain name is registered with
+				<a href="https://www.canspace.ca/">Canspace</a> because they
+				offer pretty cheap prices with .ca domain names. I let Vultr handle
+				DNS rather than my domain name registrar because this allows me
+				to easily switch domain name registrars if I ever need to.
+			</p>
+
+			<h3>Static Site Generation</h3>
+			<p>
+				I am using <a href="https://jinja.palletsprojects.com/en/3.0.x/">Jinja</a>
+				as the static site generator (SSG) for my website. Python is a really
+				easy language to work with, which is why chose to use Jinja.
+			</p>
+			<p>
+				One other thing you may not have noticed is that this whole
+				website is built without the use of JavaScript. There is
+				nothing wrong with using JavaScript on the frontend on your
+				website, (though some may beg to differ) but the modern web has
+				become bloated with 
+				<a href="https://unixsheikh.com/articles/stop-pushing-javascript.html">
+				uneccssary Javascript</a>. So, I made it a challenge to see if I could
+				make a functional website without using it whatsoever. The only
+				spot where I may add JavaScript in the future is where I have
+				embedded videos, such as on my 
+				<a href="{{ site_url }}/projects/perlin-noise.html">Perlin Noise</a>
+				and <a href="{{ site_url }}/projects/hyperbright.html">HyperBright</a>
+				project pages. Using 
+				<a href="https://github.com/Dash-Industry-Forum/dash.js/wiki">dash.js</a>
+				would allow me to save on bandwidth by adaptively setting the
+				bitrate of the video based on the client's network speed.
+			</p>
+
+			<h3>Email</h3>
+			<p>
+				Under the <a href="{{ site_url }}#contact">contact section</a>
+				you will notice that my email uses my own domain name,
+				manjotbal.ca.  One way to accomplish this would have been too
+				host my own email server, but that seemed like too much
+				maintenance work for a single email. So, I decided to go with
+				an email hosting provider that had a focus on user privacy. I
+				ended up going with <a href="https://tutanota.com/">Tutanota</a>,
+				an email provider based in Germany.  They claim to not read
+				user's emails or allow third-party advertisers to do so, unlike
+				other email providers like Google and Microsoft Outlook. So far
+				it has been a pleasant experience. One thing to be aware of is that
+				<a href="https://tutanota.com/faq/#imap">Tutanota does not support IMAP</a>
+				so you will have to use either their web-client or their open
+				source desktop/mobile client to access your inbox.
+			</p>
+		</section>
+	</article>
+{% endblock %}
