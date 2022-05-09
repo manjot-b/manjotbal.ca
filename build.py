@@ -34,7 +34,7 @@ css_dir = 'css'
 
 if args.release and not args.host:
     # Must be https
-    site_url = 'https://manjotbal.ca'
+    site_url = 'https://www.manjotbal.ca'
     hostname = 'manjotbal.ca'
     output_dir = release_output_dir
 elif not args.release and args.host:
