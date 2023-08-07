@@ -1,9 +1,10 @@
+#!/usr/bin/python3
+
 import argparse
 import glob
 import os
 import rcssmin
 import shutil
-import socket
 import subprocess
 from subprocess import Popen, PIPE
 from jinja2 import Environment, FileSystemLoader
