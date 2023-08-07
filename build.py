@@ -19,9 +19,9 @@ parser.add_argument('--release',\
         help='Uses the appropriate variables and paths for the release version.',\
         action='store_true')
 parser.add_argument('--publish',\
-        help='Publish the website via rsync. Publishes to the release server if --release is \
-        specified, otherwise --host needs to also be specified.',\
-        action='store_true')
+        help='Publish the website via rsync as USER. For example, this will publish to user@hostname. \
+        Publishes to the release server if --release is specified, otherwise --host needs to also be specified.',\
+        metavar='USER')
 parser.add_argument('--host', help='The hostname when building or publishing to dev server. \
         e.g root@host. This must be provided if building or publishing the dev version.')
 args = parser.parse_args()
@@ -93,6 +93,6 @@ print(f'Files generated in {output_dir}/')
 # Use rsync to publish the contents of the release folder to the sever.
 if args.publish:
     subprocess.run(['rsync', '-azP', '--usermap=*:www-data', '--groupmap=*:www-data', \
-        f'{output_dir}/', f'root@{hostname}:/var/www/manjotbal.ca'])
+        f'{output_dir}/', f'{args.publish}@{hostname}:/var/www/manjotbal.ca'])
     print(f'Site viewable at {site_url}')
 
