@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block title %}ImgFilter{% endblock %}
+
+
+{% block content %}
+	<article class="project-article">
+		<h1>ImgFilter</h1>
+		<section>
+			<h2>About</h2>
+			<p><a href="https://github.com/manjot-b/imgfilter" target="_blank">GitHub repo</a></p>
+			<p>
+				This personal project I created to get myself aquainted with
+				<a href="https://en.wikipedia.org/wiki/General-purpose_computing_on_graphics_processing_units" target="_blank">
+				GPGPU programming</a>. Since I have an AMD graphics card I decided to go with AMD's ROCm platform
+				and use their HIP programming model to create my app. The most popular GPU compute framework that
+				most people have heard of is Nvidia's CUDA platform. Intel is new on the scene of graphics card but
+				they are also getting up to speed in the heterogeneous computing with their oneAPI which makes
+				use of the SYCL standard.
+			</p>
+			<video controls preload="metadata">
+				<source src="{{ site_url }}/videos/imgfilter-720p.webm"
+						type="video/webm">
+			</video>
+		</section>
+
+		<section>
+			<h2>How it Works</h2>
+			<p>
+				The grayscale and sepia filters are simple because they work on one pixel at a time. The grayscale
+				filter simply averages the RGB channels while the sepia filter transforms the colors for a channel based
+				on the equations found on <a href="https://yabirgb.com/sepia_filter/" target="_blank">Yabir's Blog</a>
+			</p>
+			<p>
+				For the box blur and Gaussian blur, a kernel has been applied over each pixel in the image. This kernel
+				is a mask or matrix of a particular size, but we usually work with square kernels of size NxN. The
+				kernel will take the weighted average of the pixels surrounding the center pixel to determine the
+				center pixel's new value. See an an example of a 3x3 kernel for the box blur below.
+			</p>
+			<img src="{{ site_url }}/images/projects/imgfilter/box-blur-3x3.jpg"
+				alt="The result of applying a 3x3 box blur filter to a pixel." />
+			<p>
+				The reason a GPU is able to accelerate these computations so well is because each output
+				pixel only depends on the value from the input pixels. None of the output pixels have to wait for any
+				other output pixel to be computed first. This allows us to launch several GPU kernel threads at once
+				to perform this computation.
+			</p>
+		</section>
+
+		<section>
+			<h2>Future Improvements</h2>
+			<p>
+				One of the main reasons I wanted to create an image filtering app was to learn more about
+				how edge detection works in the field of Computer Vision. The
+				<a href="https://en.wikipedia.org/wiki/Canny_edge_detector" >Canny Edge Detector</a> is a
+				popular edge detection algorithm and I already have two of the steps in the algorithm implemented.
+				Namely, the grayscale and Gaussian blur filters.
+			</p>
+			<p>
+				The second improvement that I need to make is to implement a kernel filter that works with seperable
+				kernels. Just to get things going, I first implemented a non-seperable kernel filter, which works
+				on a NxN filter. But some filters can be seperated into a horizontal and vertical filters, resulting
+				in two filters of dimension Nx1 and 1xN. This speeds up the computation drastically.
+			</p>
+			<img id="sepfilter-img" src="{{ site_url }}/images/projects/imgfilter/separable-filter.jpg" 
+				alt="An example of an NxN being decomposed into two Nx1 and 1xN filters." />
+			<p>
+				The final improvement will be to implement the same algorithms on the CPU (or get the HIP kernels to
+				run on the CPU) so that I can compare the speed up I get from using the GPU to compute the image filters.
+			</p>
+		</section>
+	</article>
+{% endblock %}
