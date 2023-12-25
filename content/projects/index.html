@@ -11,93 +11,23 @@
 		</p>
 	</section>
 
+	{% for category in metadata.projects %}
 	<section>
-		<h2>Embedded</h2>
+		<h2>{{ category | title }}</h2>
 		<div class="projects">
+			{% for project in metadata.projects[category] %}
 			<div class="card">
-				<a href="{{ site_url }}/projects/audec.html" class="card-link">
-					<img src="{{ site_url }}/images/projects/audec/dac-breadboard-800x600.jpg" 
-					 alt="STM32 bluepill on a breadboard." />
+				<a href="{{ project.url }}" class="card-link">
+					<img src="{{ project.image.url }}" 
+					alt="{{ project.image.alt }}" />
 					<div class="card-desc">
-						<h3 class="card-title">AuDec</h3>
-						<p>This project is a work in progress. I am creating a digital-to-analog 
-						converter for PCM audio data using the STM32F103C8T6 (bluepill).</p>
+						<h3 class="card-title">{{ project.name }}</h3>
+						<p>{{ project.description | trim('\n') }}</p>
 					</div>
 				</a>
 			</div>
+			{% endfor %}
 		</div>
 	</section>
-
-	<section>
-		<h2>Graphics</h2>
-		<div class="projects">
-			<div class="card">
-				<a href="{{ site_url }}/projects/imgfilter.html" class="card-link">
-					<img src="{{ site_url }}/images/projects/imgfilter/imgfilter-580x435.jpg" 
-					 alt="Image blurred using Gaussian kernel" />
-					<div class="card-desc">
-						<h3 class="card-title">ImgFilter</h3>
-						<p>A desktop app that performs image filtering on the GPU using
-						AMD's ROCm/HIP platform.</p>
-					</div>
-				</a>
-			</div>
-			<div class="card">
-				<a href="{{ site_url }}/projects/hyperbright.html" class="card-link">
-					<img src="{{ site_url }}/images/projects/hyperbright/hyperbright-800x600.jpg" 
-					 alt="HyperBright game main screen." />
-					<div class="card-desc">
-						<h3 class="card-title">HyperBright</h3>
-						<p>A group project for our Games Programming course. We created a 
-						3D driving game. Cover the most tiles with your color to win.</p>
-					</div>
-				</a>
-			</div>
-			<div class="card">
-				<a href="{{ site_url }}/projects/perlin-noise.html" class="card-link">
-					<img src="{{ site_url }}/images/projects/perlin-noise/perlin-noise-800x600.jpg"
-					 alt="Screengrab of perlin noise applied to a teapot and bunny model." />
-					<div class="card-desc">
-						<h3 class="card-title">Perlin Noise</h3>
-						<p>Final project for my Rendering course. In this project I explored 
-						creating procedurally generated textures using Perlin Noise.</p>
-					</div>
-				</a>
-			</div>
-		</div>
-	</section>
-
-	<section>
-		<h2>Quantum Computing</h2>
-		<div class="projects">
-			<div class="card">
-				<a href="{{ site_url }}/projects/quantum-stabilizers.html" class="card-link">
-					<img src="{{ site_url }}/images/projects/quant-stabilizers/stabilizers-700x525.jpg"
-					 alt="Quantum error codes." />
-					<div class="card-desc">
-						<h3 class="card-title">Quantum Stabilizers</h3>
-						<p>A final project in which I give a brief introduction to 
-						quantum error detection and correction.</p>
-					</div>
-				</a>
-			</div>
-		</div>
-	</section>
-
-	<section>
-		<h2>Web</h2>
-		<div class="projects">
-			<div class="card">
-				<a href="{{ site_url }}/projects/my-website.html" class="card-link">
-					<img src="{{ site_url }}/images/projects/manjotbalca/web-500x375.jpeg"
-					 alt="Screenshot of manjotbal.ca." />
-					<div class="card-desc">
-						<h3 class="card-title">manjotbal.ca</h3>
-						<p>This website! Click to learn more about the technologies 
-						I used to create my own personal website.</p>
-					</div>
-				</a>
-			</div>
-		</div>
-	</section>
+	{% endfor %}
 {% endblock %}

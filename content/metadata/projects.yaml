@@ -1,0 +1,55 @@
+embedded:
+  - name: Audec
+    url: '{{ site_url }}/projects/audec.html'
+    description: >
+      This project is a work in progress. I am creating a digital-to-analog
+      converter for PCM audio data using the STM32F103C8T6 (bluepill).
+    image:
+      url: '{{ site_url }}/images/projects/audec/dac-breadboard-800x600.jpg'
+      alt: STM32 bluepill on a breadboard.
+
+graphics:
+  - name: ImgFilter
+    url: '{{ site_url }}/projects/imgfilter.html'
+    description: >
+      A desktop app that performs image filtering on the GPU using
+      AMD's ROCm/HIP platform.
+    image:
+      url: '{{ site_url }}/images/projects/imgfilter/imgfilter-580x435.jpg'
+      alt: STM32 bluepill on a breadboard.
+  - name: HyperBright
+    url: '{{ site_url }}/projects/hyperbright.html'
+    description: >
+      A group project for our Games Programming course. We created a
+      3D driving game. Cover the most tiles with your color to win.
+    image:
+      url: '{{ site_url }}/images/projects/hyperbright/hyperbright-800x600.jpg'
+      alt: HyperBright game main screen.
+  - name: Perlin Noise
+    url: '{{ site_url }}/projects/perlin-noise.html'
+    description: >
+      Final project for my Rendering course. In this project I explored
+      creating procedurally generated textures using Perlin Noise.
+    image:
+      url: '{{ site_url }}/images/projects/perlin-noise/perlin-noise-800x600.jpg'
+      alt: Screengrab of perlin noise applied to a teapot and bunny model.
+
+quantum computing:
+  - name: Quantum Stabilizers
+    url: '{{ site_url }}/projects/quantum-stabilizers.html'
+    description: >
+      A final project in which I give a brief introduction to
+      quantum error detection and correction.
+    image:
+      url: '{{ site_url }}/images/projects/quant-stabilizers/stabilizers-700x525.jpg'
+      alt: Quantum error codes.
+
+web:
+  - name: manjotbal.ca
+    url: '{{ site_url }}/projects/my-website.html'
+    description: >
+      This website! Click to learn more about the technologies
+      I used to create my own personal website.
+    image:
+      url: '{{ site_url }}/images/projects/manjotbalca/web-500x375.jpeg'
+      alt: Screenshot of manjotbal.ca.
