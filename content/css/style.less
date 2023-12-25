@@ -129,6 +129,20 @@ nav li a:hover {
 	align-items: flex-start;
 }
 
+.profile-img {
+	display: block;
+	width: 300px;
+	margin: 2em;
+	margin-top: 0;
+	flex: 0 1 auto;
+	border: 4px solid @color-secondary-0;
+	border-radius: 50%;
+}
+
+.profile-desc {
+	flex: 1 1 600px;
+}
+
 @media screen and (max-width: 768px) {
 	.content {
 		margin: 0 2em;
@@ -166,25 +180,6 @@ nav li a:hover {
 	}
 }
 
-@media screen and (max-width: 576px) {
-	nav > a:first-child {
-		padding: 0.25em 0;
-	}
-}
-.profile-img {
-	display: block;
-	width: 300px;
-	margin: 2em;
-	margin-top: 0;
-	flex: 0 1 auto;
-	border: 4px solid @color-secondary-0;
-	border-radius: 50%;
-}
-
-.profile-desc {
-	flex: 1 1 600px;
-}
-
 .social {
 	list-style: none;
 	padding: 0;
@@ -205,6 +200,19 @@ nav li a:hover {
 	margin: 0 10px 0 0;
 	filter: brightness(0%);
 	filter: invert(80%);
+}
+
+@media screen and (max-width: 576px) {
+	.profile-img {
+		width: 90%;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.social > li::before {
+		min-width: 32px;
+		min-height: 32px;
+	}
 }
 
 #email::before {
