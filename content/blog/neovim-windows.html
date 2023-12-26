@@ -1,0 +1,171 @@
+{% extends 'layout.html' %}
+
+{% block title %}Neovim, clangd and Treesitter on Windows{% endblock %}
+
+{% block content %}
+	<article class="blog-article">
+		<h1>Neovim, clangd and Treesitter on Windows</h1>
+		<section>
+			<h2>About</h2>
+			<p>
+				In this tutorial I will show you how to setup Neovim on
+				Windows. This is a minimal setup that will allow you to work
+				with C/C++ codebases. You can always customize your setup
+				further if you wish.
+			</p>
+			<p>
+				The majority of Neovim setups are typically done on Linux or
+				MacOS. Windows isn't too different but there are some gotchas
+				if you're are using the MSVC (<code>cl.exe</code>) instead of
+				<code>clang</code> or <code>g++</code> like on Linux.
+			</p>
+		</section>
+
+		<section>
+			<h2>Scoop Package Manger</h2>
+			<p>
+				The first thing you will need to install is Scoop. Scoop is a
+				package manager for Windows, and we will use it to install
+				Neovim and all the dependencies of the various plugins. To
+				install, follow the the instructions from
+				<a href="https://scoop.sh" target="_blank">Scoop's homepage</a>.
+			</p>
+
+			<p>
+				After installing <code>scoop</code> use it to install the
+				Windows Terminal. The Windows Terminal will give you a better
+				experience than using the default command line. You can easily install
+				<a href="https://www.nerdfonts.com/" target="_blank">patched fonts</a>
+				to view icons in Neovim.
+			</p>
+			<code>scoop install windows-terminal</code>
+
+			<p>
+				With Scoop installed, we will now install neovim and all
+				dependencies for the various packages that will also be
+				installed for neovim. See below for the command and a
+				description of the package and which plugin requires it.
+			</p>
+			<code>scoop install neovim clangd llvm fd ripgrep</code>
+
+			<ul>
+				<li><code>clangd</code> &mdash; Used by the LSP server for intellisense</li>
+				<li><code>llvm</code> &mdash; Required by the Treesitter plugin to compile language parsers</li>
+				<li><code>fd</code> &mdash; Required by Telescope plugin to search for files on filesystem</li>
+				<li>
+					<code>ripgrep</code> &mdash; Required by Telescope plugin as a faster alternative
+					for <code>grep</code>
+				</li>
+			</ul>
+		</section>
+
+		<section>
+			<h2>Neovim Setup</h2>
+			<h3>Plugin Manager</h3>
+			<p>
+				On Windows your <code>init.lua</code> file will be stored at
+				<code>~/AppData/Local/nvim/init.lua</code>. Open up this file and
+				install the following plugins for Neovim. I am using
+				<a href="https://www.nerdfonts.com/" target="_blank">Packer</a>,
+				but you can use the plugin manager of your choosing.
+			</p>
+			<code class="code-block">require('packer').startup(function()
+	use 'wbthomason/packer.nvim'
+	use 'neovim/nvim-lspconfig'
+	use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+
+	-- Use the latest recommended tag for telescope
+	use { 'nvim-telescope/telescope.nvim', tag = '0.1.4', requires = 'nvim-lua/plenary.nvim' }
+end)</code>
+
+			<h3>LSP and clangd</h3>
+			<p>
+				Add the following to your <code>init.lua</code> to setup LSP
+				and use <code>clangd</code>.
+			</p>
+			<code class="code-block">local lspconfig = require 'lspconfig'
+lspconfig.clangd.setup {
+    cmd = {'clangd.exe'}, -- Add more strings to the dictionary for addition command line args
+}</code>
+			<p>
+				Take a look at the
+				<a href="https://github.com/neovim/nvim-lspconfig?tab=readme-ov-file#suggested-configuration"
+					target="_blank">
+						lspconfig README
+				</a>
+				on how to set keymaps to allow you to goto defenition, etc.
+			</p>
+
+			<h3>Treesitter</h3>
+			<p>
+				We installed the <code>llvm</code> package with <code>scoop</code> so
+				that that Treesitter will be able to compile the language parsers.
+			</p>
+			<code class="code-block">require'nvim-treesitter.configs'.setup {
+	ensure_installed = 'all',	-- Add only the ones you want if you don't want all languages.
+	highlight = { enable = true }
+}</code>
+
+			<h3>Telescope</h3>
+			<p>
+				Telescope is a great plugin to perform global search, find
+				files and list references to a variable. You can also bind
+				these action to shortcut keys. Take a look at the
+				<a href="https://github.com/nvim-telescope/telescope.nvim?tab=readme-ov-file#usage"
+					target="_blank">
+						Telescope README.
+				</a>
+			</p>
+			<code class="code-block">require 'telescope'.setup {}</code>
+
+			<h3>Install Plugins</h3>
+			<p>
+				With <code>init.lua</code> now setup, close and reopen
+				Neovim to reload this file. You will get errors about missing
+				packages. Use <code>:PackerSync</code> to download all the
+				packages, then close and reopen neovim. There should be no
+				errors this time.
+			</p>
+		</section>
+
+		<section>
+			<h2>compile_commands.json</h2>
+			<p>
+				Now we get to the Windows specific stuff.
+				<code>clangd.exe</code> looks for a
+				<code>compile_commands.json</code> file in the root directory
+				of your project. You can have it look for the file in a
+				different directory by passing in the <code>--compile-commands-dir</code>
+				command line argument to <code>clangd.exe</code>. This file
+				contains all the commands used to build every source file in
+				your project. For information on how to obtain this file, look
+				at the
+				<a href="https://clangd.llvm.org/installation#project-setup"
+					target="_blank">
+					clangd Getting Started
+				</a>
+				page. If using <code>g++</code> or <code>clang</code> to
+				compile there is probably nothing you have to do in this file.
+				But, if you are using <code>cl.exe</code> you will have to
+				perform one extra step.
+			</p>
+			<p>
+				Replace all instances of <code>C:/path/to/cl.exe</code> with
+				<code>clang-cl.exe</code> in your <code>compile_commands.json</code>.
+				This binary was installed when we installed <code>llvm</code>.
+				All it does is translate the MSVC command switches (such as
+				<code>/I</code>) to <code>clang</code>/<code>g++</code>
+				compatiable ones (<code>-I</code> in this example). This allows
+				<code>clangd</code> to work on Windows.
+			</p>
+			<p>
+				If you are still running into some issues with missing headers,
+				check out the clangd guide on 
+				<a href="https://clangd.llvm.org/installation#project-setup"
+					target="_blank">
+					System Headers
+				</a>
+			</p>
+		</section>
+	</article>
+{% endblock %}
