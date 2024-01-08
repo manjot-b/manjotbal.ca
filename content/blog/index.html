@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+	<h1>Blog</h1>
+
+	<ul class="blogs">
+		{% for blog in metadata.blogs %}
+		<li>
+			<a href="{{ blog.url }}">{{ blog.name }}</a>
+			<div class="dates">
+				<span>Date Published: {{ blog.date_published | format_date }}</span>
+
+				{% if blog.date_modified %}
+				<span>&mdash; Date Modified: {{ blog.date_modified | format_date }}</span>
+				{% endif %}
+			</div>
+		</li>
+		{% endfor %}
+	</ul>
+{% endblock %}

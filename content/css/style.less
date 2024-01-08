@@ -6,6 +6,7 @@
 @color-secondary-0: #8f99ae;
 @color-secondary-1: #1e325c;
 @reg-font-size: 1.125em;
+@small-font-size: 0.75em;
 
 html {
 	height: 100%;
@@ -35,6 +36,10 @@ a {
 
 a:hover {
 	text-decoration: underline;
+}
+
+a:visited {
+	color: MediumSlateBlue;
 }
 
 dl {
@@ -72,6 +77,10 @@ nav a {
 
 nav a:hover {
 	text-decoration: none;
+}
+
+nav a:visited {
+	color: @color-secondary-0;
 }
 
 nav > a:first-child {
@@ -316,4 +325,12 @@ code {
 	padding: 0.3em;
 	border: 0.2em solid @color-secondary-0;
 	border-radius: 0.4em;
+}
+
+ul.blogs li {
+	margin-bottom: 1em;
+}
+
+ul.blogs .dates {
+	font-size: @small-font-size;
 }

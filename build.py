@@ -13,7 +13,7 @@ from jinja2 import Environment, FileSystemLoader
 # Update the build version whenever CSS or JS is updated.
 # This will ensure that the user will get the latest styling
 # rather than the locally cached version.
-BUILD_VERSION = '1.3.2'
+BUILD_VERSION = '1.3.3'
 
 parser = argparse.ArgumentParser(description='Build the jinja templates into a static html site.')
 parser.add_argument('--release',\
@@ -56,10 +56,17 @@ env.globals['build_version']=BUILD_VERSION
 env.trim_blocks = True
 env.lstrip_blocks = True
 
+def format_date(date):
+    format = '%b %d, %Y'
+    return date.strftime(format)
+
+env.filters['format_date'] = format_date
+
+
 os.makedirs(output_dir, exist_ok=True)
 
 metadata = dict()
-yaml_files = [ f'{metadata_dir}/projects.yaml' ]
+yaml_files = [ f'{metadata_dir}/projects.yaml', f'{metadata_dir}/blogs.yaml' ]
 for yaml_file in yaml_files:
     yaml_template = env.get_template(yaml_file)
     yaml_content = yaml.load(yaml_template.render(), yaml.Loader)
