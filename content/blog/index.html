@@ -6,7 +6,7 @@
 	<h1>Blog</h1>
 
 	<ul class="blogs">
-		{% for blog in metadata.blogs %}
+		{% for blog in metadata.blogs | sort(attribute='date_published', reverse=True) %}
 		<li>
 			<a href="{{ blog.url }}">{{ blog.name }}</a>
 			<div class="dates">

@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+
+{% block title %}Handling Whitespace in Neovim{% endblock %}
+
+{% block content %}
+	<article class="blog-article">
+		<h1>Handling Whitespace in Neovim</h1>
+		<img src="{{ site_url }}/images/blog/neovim-whitespace/neovim-whitespace.jpg"
+			alt="Neovim with list mode on and trailing whitespace highlighted red." />
+
+		<section>
+			<h2>List mode</h2>
+			<p>
+				In <code>list</code> mode Neovim can display whitespace using characters of your choosing.
+				The characters to set for the different whitespace types can be found with
+				<code>:help listchars</code>.
+			</p>
+			<p>
+				We will be setting all tabs to display as a double right angle <code>» (U+00BB)</code> and all
+				leading and trailing spaces with a bullet <code>• (U+2022)</code>. In your <code>init.lua</code>
+				add the following to enable <code>list</code> mode at startup of Neovim.
+			</p>
+			<code class="code-block">vim.o.list = true
+vim.o.listchars = 'tab:» ,lead:•,trail:•'
+</code>
+			<p>
+				Note the space after the tab double right angle. The tab character must have a minimum of 2
+				characters and up to 3 characters can be used. Take a look at
+				<a href="https://symbl.cc/en/unicode-table/" target="_blank">symbl.cc</a> if you want to experiment
+				with different characters.
+			</p>
+		</section>
+
+		<section>
+			<h2>Highlighting trailing whitespace</h2>
+			<p>
+				Highlighting trailing whitespace can come in handy if you don't have a linter setup to catch
+				it for you. To do so we need to create our own <code>Highlight</code> group. After doing so
+				we need to create a <code>match</code> for the <code>Highlight</code> group.
+			</p>
+			<code class="code-block">vim.api.nvim_set_hl(0, 'TrailingWhitespace', { bg='LightRed' })
+vim.api.nvim_create_autocmd('BufEnter', {
+	pattern = '*',
+	command = [[
+		syntax clear TrailingWhitespace |
+		syntax match TrailingWhitespace "\_s\+$"
+	]]}
+)
+</code>
+			<p>
+				Let's break down what is going on here. We use <code>vim.api.nvim_set_hl()</code> to create
+				a <code>Highlight</code> group called <code>TrailingWhitespace</code> and set the background
+				color to light red. You can also set the foreground color with <code>fg='Color'</code>. To get
+				a list of color names see <code>:help gui-colors</code>.
+			</p>
+			<p>
+				Next we create an <code>autocmd</code>. If you are unfamiliar with <code>autocmd</code>s all they
+				do is allow you to run some commands when a certain event occurs. See <code>:help autocmd-events</code>
+				for a list of events.
+			</p>
+			<p>
+				In our example, when the event <code>BufEnter</code> occurs on any file (<code>pattern = '*'</code>)
+				we clear all matches for the <code>TrailingWhitespace</code> group and then create a single match for
+				the trailing whitespace with <code>"\_s\+$"</code>. Note that we use the <code>\_</code> modifier
+				in our match so that the newline is matched as well. See <code>:help \_x</code> and
+				<code>:help perl-patterns</code> for more info.
+			</p>
+		</section>
+	</article>
+{% endblock %}

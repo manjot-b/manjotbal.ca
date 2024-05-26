@@ -2,3 +2,8 @@
   url: '{{ site_url }}/blog/neovim-windows.html'
   date_published: 2024-01-07
   date_modified:
+
+- name: Handling Whitespace in Neovim
+  url: '{{ site_url }}/blog/neovim-whitespace.html'
+  date_published: 2024-05-26
+  date_modified:
