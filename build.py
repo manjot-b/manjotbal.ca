@@ -37,12 +37,10 @@ release_output_dir = 'output/release'
 
 if args.release and not args.host:
     # Must be https
-    site_url = 'https://www.manjotbal.ca'
     hostname = 'manjotbal.ca'
     output_dir = release_output_dir
 elif not args.release and args.host:
     # Make sure nginx is up and running.
-    site_url = f'http://{args.host}'
     hostname = args.host
     output_dir = dev_output_dir
 else:
@@ -50,7 +48,6 @@ else:
     exit(1)
 
 env = Environment(loader=FileSystemLoader([template_dir, content_dir]))
-env.globals['site_url']=site_url
 env.globals['build_version']=BUILD_VERSION
 env.trim_blocks = True
 env.lstrip_blocks = True
@@ -112,5 +109,4 @@ print(f'Files generated in {output_dir}/')
 if args.publish:
     subprocess.run(['rsync', '-azP', '--usermap=*:www-data', '--groupmap=*:www-data', \
         f'{output_dir}/', f'{args.publish}@{hostname}:/var/www/manjotbal.ca'])
-    print(f'Site viewable at {site_url}')
 

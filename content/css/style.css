@@ -227,17 +227,17 @@ nav li a:hover {
 }
 
 #email::before {
-	background-image: url({{ site_url }}/images/letter.png);
+	background-image: url(/images/letter.png);
 	background-repeat: no-repeat;
 }
 
 #github::before {
-	background-image: url({{ site_url }}/images/github-sign.png);
+	background-image: url(/images/github-sign.png);
 	background-repeat: no-repeat;
 }
 
 #linkedin::before {
-	background-image: url({{ site_url }}/images/linkedin.png);
+	background-image: url(/images/linkedin.png);
 	background-repeat: no-repeat;
 }
 

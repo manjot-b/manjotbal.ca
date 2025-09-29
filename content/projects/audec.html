@@ -10,16 +10,16 @@
 			<h2>About</h2>
 			<p><a href="https://github.com/manjot-b/audec" target="_blank">GitHub repo</a></p>
 			<p>
-				This is a personal project that I am currently working on so that I can improve 
-				my skills when working with embedded systems. 
+				This is a personal project that I am currently working on so that I can improve
+				my skills when working with embedded systems.
 			</p>
-			<img src="{{ site_url }}/images/projects/audec/dac-breadboard-800x600.jpg" 
+			<img src="/images/projects/audec/dac-breadboard-800x600.jpg"
 				alt="DAC prototype on a breadboard." />
 			<p>
-				The device is a digital-to-analog converter (DAC) for 
-				<a href="https://en.wikipedia.org/wiki/Pulse-code_modulation" target="_blank">PCM audio data.</a> 
-				Basically what a DAC does is it reads in a chunk of digital data and outputs 
-				the analog signal encoded by the PCM audio data. This signal can then be fed into a 
+				The device is a digital-to-analog converter (DAC) for
+				<a href="https://en.wikipedia.org/wiki/Pulse-code_modulation" target="_blank">PCM audio data.</a>
+				Basically what a DAC does is it reads in a chunk of digital data and outputs
+				the analog signal encoded by the PCM audio data. This signal can then be fed into a
 				pair of small speakers or into an amplifier if larger speakers need to be driven.
 			</p>
 		</section>
@@ -27,36 +27,36 @@
 		<section>
 			<h2>How it Works</h2>
 			<p>
-				I segemented the code into 3 tasks, which helped when architecting the code with 
+				I segemented the code into 3 tasks, which helped when architecting the code with
 				FreeRTOS.
 				<dl>
 					<dt>HostIO</dt>
 					<dd>
-						This part of the code is responsible for communicating with the host, which 
-						is the PC in this case. The HostIO and the PC follow a protocol so that 
-						the DAC can fill up its input buffer as soon as it is ready to receive 
+						This part of the code is responsible for communicating with the host, which
+						is the PC in this case. The HostIO and the PC follow a protocol so that
+						the DAC can fill up its input buffer as soon as it is ready to receive
 						more data.
 					</dd>
 					<dt>Decoder</dt>
 					<dd>
-						Currently the DAC only works with WAVE audio files. The decoder changes 
-						either the 8-bit or 16-bit data into the proper length and signedness for 
-						the IC DAC <a href="#schematic">(see diagram below)</a> and places this 
+						Currently the DAC only works with WAVE audio files. The decoder changes
+						either the 8-bit or 16-bit data into the proper length and signedness for
+						the IC DAC <a href="#schematic">(see diagram below)</a> and places this
 						data in the output buffer.
 					</dd>
 					<dt>DAC</dt>
 					<dd>
-						This part of the code sends data to the external IC DAC connected to the 
-						STM32. Since the bluepill does not have a DAC peripheral I needed to either 
-						use PWM to generate an analog signal or purchase an IC DAC. I chose the 
+						This part of the code sends data to the external IC DAC connected to the
+						STM32. Since the bluepill does not have a DAC peripheral I needed to either
+						use PWM to generate an analog signal or purchase an IC DAC. I chose the
 						latter so that I could also learn about SPI communication.
 					</dd>
 				</dl>
 			</p>
 
-			<a href="{{ site_url }}/images/projects/audec/schematic.jpg">
-				<img id="schematic" 
-				src="{{ site_url }}/images/projects/audec/schematic-800x600.jpg" 
+			<a href="/images/projects/audec/schematic.jpg">
+				<img id="schematic"
+				src="/images/projects/audec/schematic-800x600.jpg"
 				alt="Schematic of DAC." />
 			</a>
 		</section>
@@ -64,30 +64,30 @@
 		<section>
 			<h2>Things I Learned</h2>
 			<p>
-				I figured out how to work with serial communication protocols such as UART and SPI. 
-				I used UART to communicate with the host PC and with a little bit of playing around I 
+				I figured out how to work with serial communication protocols such as UART and SPI.
+				I used UART to communicate with the host PC and with a little bit of playing around I
 				was able to get hardware flow control (RTS/CTS) working too.
 			</p>
 			<p>
-				To talk with the IC DAC I had to learn about SPI. It wasn't too bad to get the SPI 
-				peripheral on the bluepill up and communicating with the DAC. The next serial 
-				protocol that I need to learn is I2C. Once I think of a project that requires I2C I 
+				To talk with the IC DAC I had to learn about SPI. It wasn't too bad to get the SPI
+				peripheral on the bluepill up and communicating with the DAC. The next serial
+				protocol that I need to learn is I2C. Once I think of a project that requires I2C I
 				will be able to learn that protocol too.
 			</p>
 			<p>
-				To prevent the HostIO task from blocking I had to use DMA when transferring the 
+				To prevent the HostIO task from blocking I had to use DMA when transferring the
 				PCM audio data to the input buffer on the device.
 			</p>
 			<p>
-				The sample rate of the audio file dictates how long the DAC needs to output a 
-				particular voltage level before switching to the next sample. To get this timing 
+				The sample rate of the audio file dictates how long the DAC needs to output a
+				particular voltage level before switching to the next sample. To get this timing
 				correct I figured out how to work with timers and interrupts.
 			</p>
 			<p>
-				Finally, to bring the project together I learned about FreeRTOS. FreeRTOS 
-				definitely helps in speeding up development time but there is quite a bit 
-				to figure out in regards to integrating it into a project. It was worth it 
-				though because the concept of tasks and task communication via queues and 
+				Finally, to bring the project together I learned about FreeRTOS. FreeRTOS
+				definitely helps in speeding up development time but there is quite a bit
+				to figure out in regards to integrating it into a project. It was worth it
+				though because the concept of tasks and task communication via queues and
 				notifications helps in architecting the code into different modules.
 			</p>
 		</section>
@@ -102,17 +102,17 @@
 				better signal.
 			</p>
 			<p>
-				The second improvement I want to add is USB support. Currently I use UART and 
-				a custom python script to send over the audio data. But if I can implement a USB 
-				driver then the host PC will be able to recognize my device as a USB HID 
-				audio device and output all audio data from the PC to the DAC, not just 
-				a particular audio file. This is going a big task as I will have to figure 
+				The second improvement I want to add is USB support. Currently I use UART and
+				a custom python script to send over the audio data. But if I can implement a USB
+				driver then the host PC will be able to recognize my device as a USB HID
+				audio device and output all audio data from the PC to the DAC, not just
+				a particular audio file. This is going a big task as I will have to figure
 				out how to communicate with the ALSA drivers on Linux too.
 			</p>
 
 			<p>
-				This is why it is important to work on a project in an iterative method. I am 
-				currently trying to get the first prototype at least working. Once I have that 
+				This is why it is important to work on a project in an iterative method. I am
+				currently trying to get the first prototype at least working. Once I have that
 				done I can then iterate and improve or add new features to the project.
 			</p>
 		</section>

@@ -6,7 +6,7 @@
 	<section>
 		<h1>Projects</h1>
 		<p>
-			Some of my personal projects are listed down below. Click on a project to learn more 
+			Some of my personal projects are listed down below. Click on a project to learn more
 			details about it.
 		</p>
 	</section>
@@ -18,7 +18,7 @@
 			{% for project in metadata.projects[category] %}
 			<div class="card">
 				<a href="{{ project.url }}" class="card-link">
-					<img src="{{ project.image.url }}" 
+					<img src="{{ project.image.url }}"
 					alt="{{ project.image.alt }}" />
 					<div class="card-desc">
 						<h3 class="card-title">{{ project.name }}</h3>
