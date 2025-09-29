@@ -7,7 +7,6 @@ import rcssmin
 import shutil
 import subprocess
 import yaml
-from subprocess import Popen, PIPE
 from jinja2 import Environment, FileSystemLoader
 
 # Update the build version whenever CSS or JS is updated.
@@ -91,21 +90,18 @@ for html_file in glob.iglob(f'{content_dir}/**/*.html', recursive=True):
     with open(f'{output_dir}/{html_file}', 'w') as outfile:
         outfile.write(template.render(metadata=metadata))
 
-# Make sure the less npm module is installed globally.
-for less_file in glob.iglob(f'{css_dir}/*.less'):
-    less_file = less_file[len(content_dir) + 1:]
-    template = env.get_template(less_file)
-    filename = less_file.split(".")[0]
-    css = f'{filename}.css'
+# Minify CSS files
+for css_file in glob.iglob(f'{css_dir}/*.css'):
+    css_file = css_file[len(content_dir) + 1:]
+    template = env.get_template(css_file)
+
+    filename = css_file.split(".")[0]
     css_min = f'{filename}-min.css'
+    os.makedirs(f'{output_dir}/{os.path.dirname(css_min)}', exist_ok=True)
 
-    proc = Popen(['lessc', '-', f'{output_dir}/{css}'], stdout=PIPE, stdin=PIPE, stderr=PIPE)
-    proc.communicate(input=template.render().encode())
-
-    with open(f'{output_dir}/{css}', 'r') as css_file:
-        minified = rcssmin.cssmin(css_file.read())
-        with open(f'{output_dir}/{css_min}', 'w') as css_min_file:
-            css_min_file.write(str(minified))
+    with open(f'{output_dir}/{css_min}', 'w') as css_min_file:
+        minified = rcssmin.cssmin(template.render())
+        css_min_file.write(str(minified))
 
 shutil.copytree(assets_dir, output_dir, dirs_exist_ok=True)
 
