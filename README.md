@@ -5,25 +5,30 @@ the [jinja2](https://jinja.palletsprojects.com/en/2.11.x/) templating engine to 
 # Structure
 Jinja layout files can be found in the `templates/` directory.
 HTML files that extend these layout files are in the `content/` directory.
-All Less files are in `content/css` and when generated will be placed in `output/<mode>/css/`.
+All css files are in `content/css`.
 
-# Usage
-To generate the dev files to be run on a local (vm) nginx webserver enter
+# Build
+## Docker
+To build and run the Docker image enter the command:
 ```
-python3 build.py --host <host-address>
-```
-To publish the contents of this directory to a server of your choosing.
-```
-python3 build.py --publish --host <host-address>
+docker compose up --build -d
 ```
 
-To generate the release files add the `--release` switch,
-```
-python3 build.py --release
-```
-The generated files can be found in `output/release/`.
+Go to [http://localhost:8080](http://localhost:8080) to view the website.
 
-To publish to the remote server (requries SSH keys on server) enter
+## Local
+To build the files on your local system first set up a python virtual env:
+```bash
+python -m venv venv
+source venv/bin/activate
 ```
-python3 build.py --release --publish
+
+Next install the necessary pip packages to build the site with:
+```bash
+python -m pip install Jinja2 PyYAML minify-html rcssmin
+```
+
+And then build with:
+```bash
+./build.py
 ```
