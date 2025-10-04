@@ -1,0 +1,9 @@
+services:
+  static_web_server:
+    build:
+      context: .
+      target: deploy
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    container_name: static-web-server
