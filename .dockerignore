@@ -1,0 +1,12 @@
+.git
+.gitattributes
+.gitignore
+
+.dockerignore
+Dockerfile
+docker-compose.yaml
+
+README.md
+
+output/
+venv/

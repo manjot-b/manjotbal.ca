@@ -1,0 +1,19 @@
+### Builder stage ###
+FROM python:3 AS builder
+
+WORKDIR /app
+
+COPY . .
+
+RUN python -m pip install Jinja2 PyYAML minify-html rcssmin
+RUN python build.py
+
+### Deploy stage ###
+FROM nginx:alpine AS deploy
+
+COPY --from=builder /app/output/ /usr/share/nginx/html
+COPY config/nginx/nginx.conf /etc/nginx/
+
+EXPOSE 8080
+
+#CMD ["/bin/busybox", "httpd", "-f", "-p", "8080", "-h", "/usr/share/www-data"]
