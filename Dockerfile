@@ -16,5 +16,3 @@ COPY config/nginx/nginx.conf /etc/nginx/
 COPY config/nginx/default.conf /etc/nginx/conf.d/
 
 EXPOSE 8080
-
-#CMD ["/bin/busybox", "httpd", "-f", "-p", "8080", "-h", "/usr/share/www-data"]
