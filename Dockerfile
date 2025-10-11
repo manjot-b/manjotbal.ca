@@ -15,4 +15,4 @@ COPY --from=builder /app/output/ /usr/share/nginx/html
 COPY config/nginx/nginx.conf /etc/nginx/
 COPY config/nginx/default.conf /etc/nginx/conf.d/
 
-EXPOSE 8080
+EXPOSE 80
